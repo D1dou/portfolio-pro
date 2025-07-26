@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>education - dima dhehibi</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            width: 100%; height: 100%; overflow-x: hidden;
+            background-color: #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', Arial, sans-serif;
+            color: #D4AF37; -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Background fixe */
+        .unicorn-background {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none;
+        }
+        .unicorn-project { width: 100vw !important; height: 100vh !important; position: absolute; top: 0; left: 0; }
+        
+        /* Layout principal */
+        .main-content { position: relative; z-index: 10; min-height: 100vh; padding: 120px 0 140px; }
+        
+        /* Header & Footer */
+        .header-menu {
+            position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100px !important;
+            background-color: #000 !important; z-index: 2147483647 !important; display: flex !important;
+            align-items: center !important; justify-content: center !important; gap: 40px !important; padding: 0 20px !important;
+        }
+        .footer-overlay {
+            position: fixed !important; bottom: 0 !important; left: 0 !important; width: 100vw !important; height: 120px !important;
+            background-color: #000 !important; z-index: 2147483647 !important; pointer-events: auto !important;
+        }
+        
+        .menu-item {
+            color: #F5E6A3; text-decoration: none; font-size: 16px; font-weight: 500; transition: color 0.3s ease;
+            cursor: pointer; white-space: nowrap;
+        }
+        .menu-item:hover { color: #D4AF37; }
+        .menu-item.active { color: #B8860B; border-bottom: 2px solid #B8860B; padding-bottom: 2px; }
+        
+        /* Bento Grid */
+        .education-section {
+            max-width: 1400px; margin: 0 auto; padding: 40px 20px; display: grid;
+            grid-template-columns: repeat(12, 1fr); gap: 25px;
+            grid-template-areas: 
+                "title title title title title title title title title title title title"
+                "exp exp exp exp exp cert cert cert cert cert cert cert"
+                ". education education education education education education education education education education ."
+                "volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer volunteer";
+        }
+        
+        .section-title {
+            font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 30px;
+            color: #000; -webkit-text-stroke: 1px #D4AF37; grid-area: title;
+        }
+        
+        /* Containers */
+        .professional-section, .education-timeline, .certifications-section, .volunteer-section {
+            background: rgba(0, 0, 0, 0.85); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 20px;
+            padding: 30px; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        .professional-section:hover, .education-timeline:hover, .certifications-section:hover, .volunteer-section:hover {
+            border-color: rgba(212, 175, 55, 0.5); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(212, 175, 55, 0.2);
+        }
+        
+        .professional-section { grid-area: exp; }
+        .education-timeline { grid-area: education; }
+        .certifications-section { grid-area: cert; }
+        .volunteer-section { grid-area: volunteer; }
+        
+        .section-subtitle {
+            font-size: 1.6rem; font-weight: 600; margin-bottom: 25px; color: #F5E6A3; text-align: center;
+        }
+        
+        /* Items communs */
+        .experience-item, .timeline-item {
+            background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 15px;
+            padding: 25px; margin-bottom: 20px; transition: all 0.3s ease;
+        }
+        .experience-item:hover, .timeline-item:hover {
+            background: rgba(212, 175, 55, 0.15); transform: translateY(-3px); border-color: rgba(212, 175, 55, 0.4);
+        }
+        
+        .experience-item { display: flex; align-items: center; gap: 20px; }
+        .experience-logo, .volunteer-logo {
+            width: 60px; height: 60px; background: linear-gradient(45deg, #D4AF37, #B8860B); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold;
+            font-size: 12px; text-align: center; flex-shrink: 0;
+        }
+        .volunteer-logo { width: 45px; height: 45px; background: linear-gradient(45deg, #F5E6A3, #D4AF37); }
+        
+        .experience-content, .volunteer-content { flex: 1; }
+        .experience-period, .timeline-year { color: #B8860B; font-size: 1rem; font-weight: bold; margin-bottom: 5px; }
+        .timeline-year { font-size: 1.1rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .experience-company, .timeline-institution { font-size: 1.3rem; font-weight: 600; color: #F5E6A3; margin-bottom: 5px; }
+        .timeline-institution { font-size: 1.4rem; margin-bottom: 8px; }
+        .experience-position, .timeline-degree { font-size: 1.1rem; color: #D4AF37; margin-bottom: 8px; }
+        .timeline-degree { margin-bottom: 12px; font-style: italic; }
+        .experience-description, .timeline-description { color: #E6D690; line-height: 1.5; font-size: 0.95rem; }
+        
+        /* Certifications */
+        .certifications-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; justify-items: center; }
+        .certification-badge {
+            position: relative; width: 100px; height: 100px; background: transparent; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.4s ease;
+            border: 3px solid #D4AF37; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        .certification-badge::before {
+            content: ''; position: absolute; top: -4px; left: -4px; right: -4px; bottom: -4px;
+            background: linear-gradient(45deg, #F5E6A3, #D4AF37); border-radius: 50%; z-index: -1; opacity: 0.2;
+        }
+        .certification-badge:hover {
+            transform: scale(1.1) rotate(5deg); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.5); border-color: #F5E6A3;
+        }
+        .certification-logo {
+            width: 70px; height: 70px; display: flex; align-items: center; justify-content: center;
+            color: #D4AF37; font-weight: bold; font-size: 12px; text-align: center;
+        }
+        
+        /* Bulle info certification */
+        .certification-tooltip {
+            position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.95); border: 2px solid #D4AF37; border-radius: 15px;
+            padding: 20px; min-width: 280px; max-width: 350px; display: none; z-index: 999999;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+        .certification-tooltip.active { display: block; animation: fadeInUp 0.3s ease; }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        .certification-tooltip::after {
+            content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            border: 8px solid transparent; border-top-color: #D4AF37;
+        }
+        .tooltip-title { color: #F5E6A3; font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; text-align: center; }
+        .tooltip-description { color: #E6D690; font-size: 0.9rem; line-height: 1.4; margin-bottom: 15px; }
+        .tooltip-score {
+            background: linear-gradient(45deg, #D4AF37, #B8860B); color: #000; padding: 8px 12px;
+            border-radius: 20px; text-align: center; font-weight: bold; font-size: 0.9rem; margin-bottom: 10px;
+        }
+        .tooltip-link {
+            color: #D4AF37; text-decoration: none; font-size: 0.8rem; text-align: center;
+            display: block; margin-top: 10px;
+        }
+        .tooltip-link:hover { color: #F5E6A3; }
+        .tooltip-close {
+            position: absolute; top: 8px; right: 12px; background: none; border: none;
+            color: #D4AF37; font-size: 18px; cursor: pointer; padding: 0; width: 20px; height: 20px;
+        }
+        
+        /* Bénévolat */
+        .volunteer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .volunteer-item {
+            background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 12px;
+            padding: 20px; transition: all 0.3s ease; display: flex; flex-direction: column;
+            align-items: center; text-align: center; gap: 12px;
+        }
+        .volunteer-item:hover {
+            background: rgba(212, 175, 55, 0.15); transform: translateY(-3px); border-color: rgba(212, 175, 55, 0.4);
+        }
+        .volunteer-organization { font-size: 1rem; font-weight: 600; color: #F5E6A3; margin-bottom: 5px; }
+        .volunteer-role { color: #D4AF37; font-size: 0.9rem; margin-bottom: 5px; }
+        .volunteer-period { color: #B8860B; font-size: 0.8rem; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .education-section {
+                grid-template-columns: 1fr;
+                grid-template-areas: "title" "exp" "education" "cert" "volunteer";
+                gap: 15px;
+            }
+            .header-menu { height: 80px !important; gap: 20px !important; padding: 0 10px !important; }
+            .menu-item { font-size: 14px; }
+            .footer-overlay { height: 100px !important; }
+            .main-content { padding-top: 100px; padding-bottom: 120px; }
+            .experience-item { flex-direction: column; text-align: center; gap: 15px; }
+            .volunteer-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .certifications-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        }
+        
+        @media (max-width: 480px) {
+            .header-menu { height: 70px !important; gap: 15px !important; padding: 0 5px !important; }
+            .menu-item { font-size: 12px; }
+            .footer-overlay { height: 80px !important; }
+            .section-title { font-size: 2rem; }
+            .volunteer-grid { grid-template-columns: 1fr; gap: 10px; }
+        }
+        
+        @media (hover: none) and (pointer: coarse) { .menu-item:active { color: #D4AF37; } }
+    </style>
+</head>
+<body>
+    <!-- Background UnicornStudio fixe -->
+    <div class="unicorn-background">
+        <div class="unicorn-project" 
+             data-us-project="9KmmcikCgj3xWnTDRmp3" 
+             data-us-scale="1"
+             data-us-dpi="1.5"
+             data-us-lazyload="true"
+             data-us-production="true"
+             data-us-alttext="Background Education"
+             data-us-arialabel="Animation de fond pour la page education">
+        </div>
+    </div>
+
+    <!-- Header menu -->
+    <div class="header-menu">
+        <a href="index.html" class="menu-item">menu</a>
+        <a href="education.html" class="menu-item active">education</a>
+        <a href="#" class="menu-item">skills & projects</a>
+        <a href="#" class="menu-item">portfolio</a>
+        <a href="#" class="menu-item">contact</a>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="main-content">
+        <section class="education-section">
+            <h1 class="section-title">education</h1>
+            
+            <!-- Expériences Professionnelles -->
+            <div class="professional-section">
+                <h2 class="section-subtitle">professional</h2>
+                <div class="experience-item">
+                    <div class="experience-logo">DOCTOLIB</div>
+                    <div class="experience-content">
+                        <div class="experience-period">sept 2024 - janv 2025</div>
+                        <div class="experience-company">Doctolib</div>
+                        <div class="experience-position">IT Engineer Intern</div>
+                        <div class="experience-description">
+				→ development of an internal monitoring tool POC <br> 
+				→ IT support <br>
+				→ maintenance and technical assistance <br>
+				→ roadmap development <br>
+				→ feature testing and requests (Dust) <br>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="experience-logo">TLFM</div>
+                    <div class="experience-content">
+                        <div class="experience-period">july 2022 - aug 2022</div>
+                        <div class="experience-company">TLFM</div>
+                        <div class="experience-position">Frontend dev</div>
+			<div class="experience-description">
+				→ UX design to improve brand identity guidelines <br> 
+				→ R&D development of anti-fraud solutions<br>
+				→ maintenance and technical assistance <br>
+				→ website wireframe <br>
+                        </div>
+
+                    </div>
+                </div>
+                
+                <div class="experience-item">
+                    <div class="experience-logo">Anar Paris</div>
+                    <div class="experience-content">
+                        <div class="experience-period">may 2024 - june 2024</div>
+                        <div class="experience-company">Anar Paris</div>
+                        <div class="experience-position">Versatile team member</div>
+                        <div class="experience-description">
+				→ food preparation & attention to detail <br> 
+				→ restaurant hygiene & food safety<br>
+				→ independant thinking & communication <br>
+				→ adaptability & organizational skills <br>
+				→ cash handling & cultural awareness <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Parcours Éducatif -->
+            <div class="education-timeline">
+                <h2 class="section-subtitle">educational background</h2>
+                <div class="timeline-item">
+                    <div class="timeline-year">2021 - 2026</div>
+                    <div class="timeline-institution">EPITA</div>
+                    <div class="timeline-degree">Master 2 Global IT Management & Entrepreneurship Program</div>
+                    <div class="timeline-description">
+			    entrepreneurship track : <br>
+                        	→ market - product <br> 
+				→ design thinking - empathy - definition - ideation - prototypinh - testing<br>
+                    </div>
+                </div>
+               
+		 <div class="timeline-item">
+                    <div class="timeline-year">july 2025</div>
+                    <div class="timeline-institution">Cambridge University</div>
+                    <div class="timeline-degree">Learning AI Through Visualization</div>
+                    <div class="timeline-description">
+				→ general view over AI-related problems <br> 
+				→ optimization <br>
+				→ machine learning (linear regression) <br>
+				→ deep learning <br>
+				→ language models & neural network based approaches <br>
+				→ LLMs & GenAI overview<br>
+                    </div>
+                </div>
+
+
+                <div class="timeline-item">
+                    <div class="timeline-year">july 2025</div>
+                    <div class="timeline-institution">Article 1</div>
+                    <div class="timeline-degree">Bootcamp Leadership</div>
+                    <div class="timeline-description">
+				→ self assessment & personal branding <br> 
+				→ inclusive leadership <br>
+				→ active listening & communication <br>
+				→ team collaboration & cultural competency <br>
+				→ emotional intelligence & strategic planning <br>
+				→ goal setting & public speaking <br>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-year">2017 - 2020</div>
+                    <div class="timeline-institution">Lucie Aubrac Comprehensive High Schoool</div>
+                    <div class="timeline-degree">Scientific Baccalaureate with Engineering Sciences Specialization</div>
+                    <div class="timeline-description">
+                       		→ summa cum laude (Highest Honors) <br>
+				→ holography study as final year project <br>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Certifications -->
+            <div class="certifications-section">
+                <h2 class="section-subtitle">certifications</h2>
+                <div class="certifications-grid">
+                    <!-- Badge Voltaire avec tooltip -->
+                    <div class="certification-badge" onclick="toggleTooltip('voltaire-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/voltaire-logo.png" alt="Voltaire" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">	
+                        </div>
+                        <div class="certification-tooltip" id="voltaire-tooltip">
+                            <div class="tooltip-title">projet voltaire</div>
+                            <div class="tooltip-description">
+                                Standardized test measuring English listening and reading skills in professional environments.
+                            </div>
+                            <div class="tooltip-score">Score : C2 - Advanced Level</div>
+                            <!-- <a href="#" class="tooltip-link" target="_blank">Voir la certification →</a> -->
+                        </div>
+                    </div>
+                    
+                    <!-- Badge TOEIC -->
+                    <div class="certification-badge" onclick="toggleTooltip('toeic-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/toeic-logo.png" alt="Toeic" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">	
+                        </div>
+                        <div class="certification-tooltip" id="toeic-tooltip">
+                            <div class="tooltip-title">toeic</div>
+                            <div class="tooltip-description">
+Professional                    French certification. Mastery of spelling, grammar and written expression.                            </div>
+                            <div class="tooltip-score">Score : 900/990 - Advanced Level</div>
+                            <!-- <a href="#" class="tooltip-link" target="_blank">Voir la certification →</a> -->
+                        </div>
+                    </div>
+                    
+                    <!-- Autres badges -->
+                    <div class="certification-badge">
+                        <div class="certification-logo">GOOGLE</div>
+                    </div>
+                    <div class="certification-badge">
+                        <div class="certification-logo">META</div>
+                    </div>
+                    <div class="certification-badge">
+                        <div class="certification-logo">REACT</div>
+                    </div>
+                    <div class="certification-badge">
+                        <div class="certification-logo">NODE</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bénévolat -->
+            <div class="volunteer-section">
+                <h2 class="section-subtitle">Bénévolat</h2>
+                <div class="volunteer-grid">
+                    <div class="volunteer-item">
+                        <div class="volunteer-logo">❤️</div>
+                        <div class="volunteer-content">
+                            <div class="volunteer-organization">Code.org</div>
+                            <div class="volunteer-role">Formatrice bénévole</div>
+                            <div class="volunteer-period">2022 - Présent</div>
+                        </div>
+                    </div>
+                    
+                    <div class="volunteer-item">
+                        <div class="volunteer-logo">🌱</div>
+                        <div class="volunteer-content">
+                            <div class="volunteer-organization">Tech for Good</div>
+                            <div class="volunteer-role">Développeuse</div>
+                            <div class="volunteer-period">2021 - 2022</div>
+                        </div>
+                    </div>
+                    
+                    <div class="volunteer-item">
+                        <div class="volunteer-logo">👩‍🏫</div>
+                        <div class="volunteer-content">
+                            <div class="volunteer-organization">Girls Who Code</div>
+                            <div class="volunteer-role">Mentore</div>
+                            <div class="volunteer-period">2020 - Présent</div>
+                        </div>
+                    </div>
+                    
+                    <div class="volunteer-item">
+                        <div class="volunteer-logo">🎓</div>
+                        <div class="volunteer-content">
+                            <div class="volunteer-organization">CoderDojo</div>
+                            <div class="volunteer-role">Animatrice</div>
+                            <div class="volunteer-period">2019 - 2021</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer noir pour cacher le watermark -->
+    <div class="footer-overlay"></div>
+
+    <script type="text/javascript">
+        !function(){
+            if(!window.UnicornStudio){
+                window.UnicornStudio={isInitialized:!1};
+                var i=document.createElement("script");
+                i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",
+                i.onload=function(){
+                    window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0);
+                    
+                    // Protection header/footer
+                    setTimeout(() => {
+                        const footer = document.querySelector('.footer-overlay');
+                        const header = document.querySelector('.header-menu');
+                        
+                        [footer, header].forEach(element => {
+                            if (element) {
+                                element.style.zIndex = '2147483647';
+                                element.style.pointerEvents = 'auto';
+                                
+                                element.addEventListener('click', function(e) {
+                                    if (e.target === element) {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        return false;
+                                    }
+                                }, true);
+                            }
+                        });
+                    }, 1000);
+                },
+                (document.head || document.body).appendChild(i)
+            }
+        }();
+        
+        // Gestion des tooltips de certification
+        function toggleTooltip(tooltipId) {
+            const tooltip = document.getElementById(tooltipId);
+            tooltip.classList.toggle('active');
+        }
+        
+        function closeTooltip(tooltipId) {
+            const tooltip = document.getElementById(tooltipId);
+            tooltip.classList.remove('active');
+        }
+        
+        // Fermer tooltip en cliquant ailleurs
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.certification-badge')) {
+                const tooltips = document.querySelectorAll('.certification-tooltip');
+                tooltips.forEach(tooltip => tooltip.classList.remove('active'));
+            }
+        });
+    </script>
+</body>
+</html>
