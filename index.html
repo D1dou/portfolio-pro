@@ -130,6 +130,81 @@
                 color: #ccc;
             }
         }
+        
+        /* Bouton audio professionnel */
+        .audio-control {
+            position: fixed;
+            bottom: 140px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border: 1px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2147483648;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .audio-control:hover {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-color: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .audio-control:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 18px solid #fff;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .pause-icon {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .pause-bar {
+            width: 6px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 1px;
+        }
+        
+        /* Responsive audio control */
+        @media screen and (max-width: 768px) {
+            .audio-control {
+                bottom: 120px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .play-icon {
+                border-left: 15px solid #fff;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+                margin-left: 2px;
+            }
+            
+            .pause-bar {
+                width: 5px;
+                height: 16px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -157,6 +232,16 @@
     
     <!-- Footer noir pour cacher le watermark -->
     <div class="footer-overlay"></div>
+    
+    <!-- Bouton audio professionnel -->
+    <div class="audio-control" onclick="toggleAudio()" id="audioControl">
+        <div class="play-icon" id="playIcon"></div>
+    </div>
+    
+    <!-- Audio invisible avec loop et autoplay -->
+    <audio id="ambientAudio" loop preload="auto" autoplay>
+        <source src="jheneaiko.mp3" type="audio/mpeg">
+    </audio>
 
     <script type="text/javascript">
         !function(){
@@ -200,6 +285,52 @@
                 (document.head || document.body).appendChild(i)
             }
         }();
+        
+        // Contrôle audio professionnel avec autoplay
+        let isPlaying = false;
+        
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('ambientAudio');
+            const playIcon = document.getElementById('playIcon');
+            
+            audio.volume = 0.6; // Volume augmenté à 60%
+            
+            // Tentative d'autoplay
+            audio.play().then(() => {
+                // Autoplay réussi
+                playIcon.className = 'pause-icon';
+                playIcon.innerHTML = '<div class="pause-bar"></div><div class="pause-bar"></div>';
+                isPlaying = true;
+            }).catch(() => {
+                // Autoplay bloqué, garder le bouton play
+                console.log('Autoplay bloqué - cliquez sur le bouton pour jouer');
+                isPlaying = false;
+            });
+        });
+        
+        function toggleAudio() {
+            const audio = document.getElementById('ambientAudio');
+            const playIcon = document.getElementById('playIcon');
+            
+            if (isPlaying) {
+                audio.pause();
+                // Retour à l'icône play
+                playIcon.className = 'play-icon';
+                playIcon.innerHTML = '';
+                isPlaying = false;
+            } else {
+                audio.volume = 0.6; // Volume à 60%
+                audio.play().then(() => {
+                    // Passer à l'icône pause
+                    playIcon.className = 'pause-icon';
+                    playIcon.innerHTML = '<div class="pause-bar"></div><div class="pause-bar"></div>';
+                    isPlaying = true;
+                }).catch(e => {
+                    console.log('Lecture bloquée par le navigateur');
+                });
+            }
+        }
     </script>
 </body>
 </html>
