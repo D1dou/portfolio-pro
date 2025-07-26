@@ -40,6 +40,59 @@
         .menu-item:hover { color: #D4AF37; }
         .menu-item.active { color: #B8860B; border-bottom: 2px solid #B8860B; padding-bottom: 2px; }
         
+        /* Bouton audio professionnel */
+        .audio-control {
+            position: fixed;
+            bottom: 140px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border: 1px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2147483648;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .audio-control:hover {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-color: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .audio-control:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 18px solid #fff;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .pause-icon {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .pause-bar {
+            width: 6px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 1px;
+        }
+        
         /* Bento Grid */
         .education-section {
             max-width: 1400px; margin: 0 auto; padding: 40px 20px; display: grid;
@@ -179,6 +232,25 @@
             .experience-item { flex-direction: column; text-align: center; gap: 15px; }
             .volunteer-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
             .certifications-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            
+            .audio-control {
+                bottom: 120px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .play-icon {
+                border-left: 15px solid #fff;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+                margin-left: 2px;
+            }
+            
+            .pause-bar {
+                width: 5px;
+                height: 16px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -210,9 +282,9 @@
     <div class="header-menu">
         <a href="index.html" class="menu-item">menu</a>
         <a href="education.html" class="menu-item active">education</a>
-        <a href="#" class="menu-item">skills & projects</a>
-        <a href="#" class="menu-item">portfolio</a>
-        <a href="#" class="menu-item">contact</a>
+        <!--<a href="#" class="menu-item">skills & projects</a>-->
+        <!--<a href="#" class="menu-item">portfolio</a>-->
+        <a href="contact.html" class="menu-item">contact</a>
     </div>
 
     <!-- Contenu principal -->
@@ -320,10 +392,22 @@
                     <div class="timeline-institution">Lucie Aubrac Comprehensive High Schoool</div>
                     <div class="timeline-degree">Scientific Baccalaureate with Engineering Sciences Specialization</div>
                     <div class="timeline-description">
-                       		→ summa cum laude (Highest Honors) <br>
+                → summa cum laude (Highest Honors) <br>
 				→ holography study as final year project <br>
                     </div>
                 </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">july 2019</div>
+                    <div class="timeline-institution">L'X Polytechnique</div>
+                    <div class="timeline-degree">Science Camp</div>
+                    <div class="timeline-description">
+                → problem-solving skills <br>
+                → mathematics <br>
+                → various sports activities <br>
+                    </div>
+                </div>
+
             </div>
             
             <!-- Certifications -->
@@ -333,85 +417,209 @@
                     <!-- Badge Voltaire avec tooltip -->
                     <div class="certification-badge" onclick="toggleTooltip('voltaire-tooltip')">
                         <div class="certification-logo">
-                            <img src="logos/voltaire-logo.png" alt="Voltaire" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">	
+                            <img src="logos/voltaire-logo.png" alt="Voltaire" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
                         </div>
                         <div class="certification-tooltip" id="voltaire-tooltip">
                             <div class="tooltip-title">projet voltaire</div>
                             <div class="tooltip-description">
-                                Standardized test measuring English listening and reading skills in professional environments.
+                                Professional French certification. Mastery of spelling, grammar and written expression.
                             </div>
                             <div class="tooltip-score">Score : C2 - Advanced Level</div>
-                            <!-- <a href="#" class="tooltip-link" target="_blank">Voir la certification →</a> -->
                         </div>
                     </div>
                     
                     <!-- Badge TOEIC -->
                     <div class="certification-badge" onclick="toggleTooltip('toeic-tooltip')">
                         <div class="certification-logo">
-                            <img src="logos/toeic-logo.png" alt="Toeic" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">	
+                            <img src="logos/toeic-logo.png" alt="Toeic" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
                         </div>
                         <div class="certification-tooltip" id="toeic-tooltip">
                             <div class="tooltip-title">toeic</div>
                             <div class="tooltip-description">
-Professional                    French certification. Mastery of spelling, grammar and written expression.                            </div>
+                                Standardized test measuring English listening and reading skills in professional environments.
+                            </div>
                             <div class="tooltip-score">Score : 900/990 - Advanced Level</div>
-                            <!-- <a href="#" class="tooltip-link" target="_blank">Voir la certification →</a> -->
                         </div>
                     </div>
                     
-                    <!-- Autres badges -->
-                    <div class="certification-badge">
-                        <div class="certification-logo">GOOGLE</div>
+                    <div class="certification-badge" onclick="toggleTooltip('secnum-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/secnum-logo.png" alt="SecNum Academy" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="certification-tooltip" id="secnum-tooltip">
+                            <div class="tooltip-title">anssi secnum academy</div>
+                            <div class="tooltip-description">
+                                ANSSI's cybersecurity excellence program for training information systems security experts.                            
+                            </div>
+                        </div>
                     </div>
-                    <div class="certification-badge">
-                        <div class="certification-logo">META</div>
+
+                    <div class="certification-badge" onclick="toggleTooltip('inrs-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/inrs-logo.png" alt="INRS Prévention Sup'" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="certification-tooltip" id="inrs-tooltip">
+                            <div class="tooltip-title">inrs prévention sup'</div>
+                            <div class="tooltip-description">
+                                French National Institute for Occupational Safety and Health - Higher Education Prevention Program                         
+                            </div>
+                        </div>
                     </div>
-                    <div class="certification-badge">
-                        <div class="certification-logo">REACT</div>
+
+                    <div class="certification-badge" onclick="toggleTooltip('pmi-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/pmi-logo.png" alt="Project Management Fundamentals" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="certification-tooltip" id="pmi-tooltip">
+                            <div class="tooltip-title">project management fundamentals</div>
+                            <div class="tooltip-description">
+                                Project Management Fundamentals: Core principles and methodologies for planning, executing, and delivering successful projects.
+                            </div>
+                        </div>
                     </div>
-                    <div class="certification-badge">
-                        <div class="certification-logo">NODE</div>
+
+                    <div class="certification-badge" onclick="toggleTooltip('werisk-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/werisk-logo.png" alt="Workplace First Aid Certification" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="certification-tooltip" id="werisk-tooltip">
+                            <div class="tooltip-title">workplace first aid certification</div>
+                            <div class="tooltip-description">
+                                First Aid at Work: Emergency response training for workplace accidents and health incidents.
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="certification-badge" onclick="toggleTooltip('sorbonne-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/sorbonne-universite-logo.png" alt="Art Explora" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="certification-tooltip" id="sorbonne-tooltip">
+                            <div class="tooltip-title">art explora sorbonne university</div>
+                            <div class="tooltip-description">
+                                Cultural program exploring art history, museum studies, and creative industries in partnership with Sorbonne University.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="certification-badge" onclick="toggleTooltip('microsoft-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/microsoft-logo.png" alt="Microsoft" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="certification-tooltip" id="microsoft-tooltip">
+                            <div class="tooltip-title">create and use analytics reports w/ power bi</div>
+                            <div class="tooltip-description">
+                                Create and use analytics reports with Power BI: Data visualization and business intelligence training for creating interactive dashboards and analytical reports.
+                            </div>
+                            <a href="https://learn.microsoft.com/en-us/users/dimadhehibi-6811/achievements/uyk29wt3?ref=https%3A%2F%2Fwww.linkedin.com%2F" class="tooltip-link" target="_blank">view certificate →</a>
+                        </div>
+                    </div>
+
+                     <div class="certification-badge" onclick="toggleTooltip('dataiku-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/dataiku-logo.png" alt="Dataiku" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="certification-tooltip" id="dataiku-tooltip">
+                            <div class="tooltip-title">core designer & ML practitioner</div>
+                            <div class="tooltip-description">
+                                → Dataiku Core Designer: Data science platform training for building end-to-end data pipelines and analytics workflows. <br>
+                                → Dataiku ML Practitioner: Machine learning certification for developing, deploying, and monitoring ML models in production.
+                            </div>
+                            <a href="https://verify.skilljar.com/c/nd53q7vbe9of" class="tooltip-link" target="_blank">view certificate (core designer) →</a>
+                            <a href="https://verify.skilljar.com/c/w3cki7hbsr4v" class="tooltip-link" target="_blank">view certificate (ml practitioner) →</a>
+                        </div>
+                    </div>
+
+                    <div class="certification-badge" onclick="toggleTooltip('drsd-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/drsd-logo.png" alt="Protection du secret de la défense nationale " style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="certification-tooltip" id="drsd-tooltip">
+                            <div class="tooltip-title">drsd protection of national defense secrets</div>
+                            <div class="tooltip-description">
+                                Training on handling and safeguarding classified defense information and security protocols.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="certification-badge" onclick="toggleTooltip('ibm-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/ibm-logo.png" alt="Cybersecurity & Data" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="certification-tooltip" id="ibm-tooltip">
+                            <div class="tooltip-title">cybersecurity & data</div>
+                            <div class="tooltip-description">
+                                IBM training program covering cybersecurity fundamentals, data protection, and enterprise security solutions.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="certification-badge" onclick="toggleTooltip('columbia-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/columbia-university-logo.png" alt="Columbia University" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="certification-tooltip" id="columbia-tooltip">
+                            <div class="tooltip-title">learning ai through visualization</div>
+                            <div class="tooltip-description">
+                                Columbia University program exploring artificial intelligence concepts through visual and interactive learning methods.
+                            </div>
+                            <a href="https://badges.plus.columbia.edu/29724c5d-1988-468d-86d8-9c540e70504d#acc.5dNmPyFV" class="tooltip-link" target="_blank">view certificate →</a>
+                        </div>
+                    </div>
+
+                    <div class="certification-badge" onclick="toggleTooltip('cnrs-tooltip')">
+                        <div class="certification-logo">
+                            <img src="logos/cnrs-logo.png" alt="CNRS" style="width: 80px; height: 80px; object-fit: cover; border-radius: 50%;">
+                        </div>
+                        <div class="certification-tooltip" id="cnrs-tooltip">
+                            <div class="tooltip-title">environmental emergency response training</div>
+                            <div class="tooltip-description">
+                                CNRS training program on environmental awareness and ecological emergency response for planetary protection.
+                            </div>
+                            <a href="https://engagement.didask.com/api/certificate/pdf/687e0af95d57d90b70540857?language=fr" class="tooltip-link" target="_blank">view certificate →</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             
             <!-- Bénévolat -->
             <div class="volunteer-section">
-                <h2 class="section-subtitle">Bénévolat</h2>
+                <h2 class="section-subtitle">community service</h2>
                 <div class="volunteer-grid">
                     <div class="volunteer-item">
                         <div class="volunteer-logo">❤️</div>
                         <div class="volunteer-content">
-                            <div class="volunteer-organization">Code.org</div>
-                            <div class="volunteer-role">Formatrice bénévole</div>
-                            <div class="volunteer-period">2022 - Présent</div>
+                            <div class="volunteer-organization">Article 1</div>
+                            <div class="volunteer-role">mentee</div>
+                            <div class="volunteer-period">2021 - present</div>
                         </div>
                     </div>
                     
                     <div class="volunteer-item">
                         <div class="volunteer-logo">🌱</div>
                         <div class="volunteer-content">
-                            <div class="volunteer-organization">Tech for Good</div>
-                            <div class="volunteer-role">Développeuse</div>
-                            <div class="volunteer-period">2021 - 2022</div>
+                            <div class="volunteer-organization">Epi'Delices</div>
+                            <div class="volunteer-role">chairwoman & secretary general</div>
+                            <div class="volunteer-period">2024 - present</div>
                         </div>
                     </div>
                     
                     <div class="volunteer-item">
                         <div class="volunteer-logo">👩‍🏫</div>
                         <div class="volunteer-content">
-                            <div class="volunteer-organization">Girls Who Code</div>
-                            <div class="volunteer-role">Mentore</div>
-                            <div class="volunteer-period">2020 - Présent</div>
+                            <div class="volunteer-organization">BecomTech</div>
+                            <div class="volunteer-role">ambassador</div>
+                            <div class="volunteer-period">2018 - present</div>
                         </div>
                     </div>
                     
                     <div class="volunteer-item">
                         <div class="volunteer-logo">🎓</div>
                         <div class="volunteer-content">
-                            <div class="volunteer-organization">CoderDojo</div>
-                            <div class="volunteer-role">Animatrice</div>
-                            <div class="volunteer-period">2019 - 2021</div>
+                            <div class="volunteer-organization">Prologin</div>
+                            <div class="volunteer-role">volunteer</div>
+                            <div class="volunteer-period">2022 - present</div>
                         </div>
                     </div>
                 </div>
@@ -421,6 +629,16 @@ Professional                    French certification. Mastery of spelling, gramm
     
     <!-- Footer noir pour cacher le watermark -->
     <div class="footer-overlay"></div>
+    
+    <!-- Bouton audio professionnel -->
+    <div class="audio-control" onclick="toggleAudio()" id="audioControl">
+        <div class="play-icon" id="playIcon"></div>
+    </div>
+    
+    <!-- Audio invisible avec loop et autoplay -->
+    <audio id="ambientAudio" loop preload="auto" autoplay>
+        <source src="jheneaiko.mp3" type="audio/mpeg">
+    </audio>
 
     <script type="text/javascript">
         !function(){
@@ -455,6 +673,52 @@ Professional                    French certification. Mastery of spelling, gramm
                 (document.head || document.body).appendChild(i)
             }
         }();
+        
+        // Contrôle audio professionnel avec autoplay
+        let isPlaying = false;
+        
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('ambientAudio');
+            const playIcon = document.getElementById('playIcon');
+            
+            audio.volume = 0.6; // Volume augmenté à 60%
+            
+            // Tentative d'autoplay
+            audio.play().then(() => {
+                // Autoplay réussi
+                playIcon.className = 'pause-icon';
+                playIcon.innerHTML = '<div class="pause-bar"></div><div class="pause-bar"></div>';
+                isPlaying = true;
+            }).catch(() => {
+                // Autoplay bloqué, garder le bouton play
+                console.log('Autoplay bloqué - cliquez sur le bouton pour jouer');
+                isPlaying = false;
+            });
+        });
+        
+        function toggleAudio() {
+            const audio = document.getElementById('ambientAudio');
+            const playIcon = document.getElementById('playIcon');
+            
+            if (isPlaying) {
+                audio.pause();
+                // Retour à l'icône play
+                playIcon.className = 'play-icon';
+                playIcon.innerHTML = '';
+                isPlaying = false;
+            } else {
+                audio.volume = 0.6; // Volume à 60%
+                audio.play().then(() => {
+                    // Passer à l'icône pause
+                    playIcon.className = 'pause-icon';
+                    playIcon.innerHTML = '<div class="pause-bar"></div><div class="pause-bar"></div>';
+                    isPlaying = true;
+                }).catch(e => {
+                    console.log('Lecture bloquée par le navigateur');
+                });
+            }
+        }
         
         // Gestion des tooltips de certification
         function toggleTooltip(tooltipId) {

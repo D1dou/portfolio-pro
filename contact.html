@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>contact - dima dhehibi</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            width: 100%; height: 100%; overflow-x: hidden;
+            background-color: #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', Arial, sans-serif;
+            color: #D4AF37; -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Background fixe */
+        .unicorn-background {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 1; pointer-events: none;
+        }
+        .unicorn-project { width: 100vw !important; height: 100vh !important; position: absolute; top: 0; left: 0; }
+        
+        /* Layout principal */
+        .main-content { position: relative; z-index: 10; min-height: 100vh; padding: 120px 0 140px; }
+        
+        /* Header & Footer */
+        .header-menu {
+            position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100px !important;
+            background-color: #000 !important; z-index: 2147483647 !important; display: flex !important;
+            align-items: center !important; justify-content: center !important; gap: 40px !important; padding: 0 20px !important;
+        }
+        .footer-overlay {
+            position: fixed !important; bottom: 0 !important; left: 0 !important; width: 100vw !important; height: 120px !important;
+            background-color: #000 !important; z-index: 2147483647 !important; pointer-events: auto !important;
+        }
+        
+        .menu-item {
+            color: #F5E6A3; text-decoration: none; font-size: 16px; font-weight: 500; transition: color 0.3s ease;
+            cursor: pointer; white-space: nowrap;
+        }
+        .menu-item:hover { color: #D4AF37; }
+        .menu-item.active { color: #B8860B; border-bottom: 2px solid #B8860B; padding-bottom: 2px; }
+        
+        /* Bouton audio professionnel */
+        .audio-control {
+            position: fixed;
+            bottom: 140px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border: 1px solid #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2147483648;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .audio-control:hover {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-color: #555;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 18px solid #fff;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            margin-left: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .pause-icon {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .pause-bar {
+            width: 6px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 1px;
+        }
+        
+        /* Section Contact */
+        .contact-section {
+            max-width: 1000px; margin: 0 auto; padding: 40px 20px; display: grid;
+            grid-template-columns: 1fr; gap: 30px;
+        }
+        
+        .section-title {
+            font-size: 3rem; font-weight: bold; text-align: center; margin-bottom: 40px;
+            color: #000; -webkit-text-stroke: 1px #D4AF37;
+        }
+        
+        /* Container principal */
+        .contact-container {
+            background: rgba(0, 0, 0, 0.85); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 25px;
+            padding: 40px; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+        }
+        .contact-container:hover {
+            border-color: rgba(212, 175, 55, 0.5); transform: translateY(-3px); 
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.2);
+        }
+        
+        /* Formulaire */
+        .contact-form {
+            display: flex; flex-direction: column; gap: 35px;
+        }
+        
+        .form-title {
+            font-size: 1.8rem; font-weight: 600; color: #F5E6A3; margin-bottom: 0px;
+            text-align: center;
+        }
+        
+        .form-group {
+            display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px;
+        }
+        
+        .form-label {
+            color: #D4AF37; font-size: 1rem; font-weight: 500;
+        }
+        
+        .form-input, .form-textarea {
+            background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px; padding: 15px; color: #F5E6A3; font-size: 1rem;
+            transition: all 0.3s ease; resize: none;
+        }
+        
+        .form-input:focus, .form-textarea:focus {
+            outline: none; border-color: #D4AF37; background: rgba(212, 175, 55, 0.15);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+        
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: rgba(212, 175, 55, 0.6);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(45deg, #D4AF37, #B8860B); color: #000; border: none;
+            border-radius: 15px; padding: 15px 30px; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease; text-transform: uppercase;
+            letter-spacing: 1px; margin-top: 20px;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #F5E6A3, #D4AF37); transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Informations de contact */
+        .contact-info {
+            display: flex; flex-direction: column; gap: 30px;
+        }
+        
+        .info-title {
+            font-size: 1.8rem; font-weight: 600; color: #F5E6A3; margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .contact-item {
+            background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px; padding: 20px; transition: all 0.3s ease;
+            display: flex; align-items: center; gap: 15px;
+        }
+        
+        .contact-item:hover {
+            background: rgba(212, 175, 55, 0.15); transform: translateY(-2px);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+        
+        .contact-icon {
+            width: 50px; height: 50px; background: linear-gradient(45deg, #D4AF37, #B8860B);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0;
+        }
+        
+        .contact-details {
+            flex: 1;
+        }
+        
+        .contact-label {
+            color: #D4AF37; font-size: 0.9rem; font-weight: 600; margin-bottom: 5px;
+        }
+        
+        .contact-value {
+            color: #F5E6A3; font-size: 1.1rem;
+        }
+        
+        .contact-value a {
+            color: #F5E6A3; text-decoration: none; transition: color 0.3s ease;
+        }
+        
+        .contact-value a:hover {
+            color: #D4AF37;
+        }
+        
+        /* Message de succès */
+        .success-message {
+            background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.5);
+            border-radius: 12px; padding: 15px; color: #4ade80; text-align: center;
+            display: none; margin-top: 15px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr; gap: 30px; padding: 30px 20px;
+            }
+            .header-menu { height: 80px !important; gap: 20px !important; padding: 0 10px !important; }
+            .menu-item { font-size: 14px; }
+            .footer-overlay { height: 100px !important; }
+            .main-content { padding-top: 100px; padding-bottom: 120px; }
+            .section-title { font-size: 2.5rem; }
+            
+            .audio-control {
+                bottom: 120px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+            
+            .play-icon {
+                border-left: 15px solid #fff;
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent;
+                margin-left: 2px;
+            }
+            
+            .pause-bar {
+                width: 5px;
+                height: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-menu { height: 70px !important; gap: 15px !important; padding: 0 5px !important; }
+            .menu-item { font-size: 12px; }
+            .footer-overlay { height: 80px !important; }
+            .section-title { font-size: 2rem; }
+            .contact-section { padding: 20px 10px; }
+        }
+        
+        @media (hover: none) and (pointer: coarse) { .menu-item:active { color: #D4AF37; } }
+    </style>
+</head>
+<body>
+    <!-- Background UnicornStudio fixe -->
+    <div class="unicorn-background">
+        <div class="unicorn-project" 
+             data-us-project="9KmmcikCgj3xWnTDRmp3" 
+             data-us-scale="1"
+             data-us-dpi="1.5"
+             data-us-lazyload="true"
+             data-us-production="true"
+             data-us-alttext="Background Contact"
+             data-us-arialabel="Animation de fond pour la page contact">
+        </div>
+    </div>
+
+    <!-- Header menu -->
+    <div class="header-menu">
+        <a href="index.html" class="menu-item">menu</a>
+        <a href="education.html" class="menu-item">education</a>
+        <a href="contact.html" class="menu-item active">contact</a>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="main-content">
+        <section class="contact-section">
+            <h1 class="section-title">contact</h1>
+            
+            <div class="contact-container">
+                <!-- Formulaire de contact -->
+                <div class="contact-form">
+                    <h2 class="form-title">get in touch</h2>
+                    
+                    <form action="https://formspree.io/f/xpwldnqg" method="POST" id="contactForm">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-input" placeholder="your.email@example.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" id="subject" name="subject" class="form-input" placeholder="Subject of your message" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea id="message" name="message" class="form-textarea" placeholder="Your message here..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">send message</button>
+                        
+                        <div class="success-message" id="successMessage">
+                            Thank you! Your message has been sent successfully.
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Informations de contact -->
+                <div class="contact-info">
+                    <h2 class="info-title">let's connect</h2>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-details">
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value">
+                                <a href="mailto:dima.dhehibi@epita.fr">dima.dhehibi@epita.fr</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">💼</div>
+                        <div class="contact-details">
+                            <div class="contact-label">LinkedIn</div>
+                            <div class="contact-value">
+                                <a href="https://linkedin.com/in/dima-dhehibi" target="_blank">/in/dima-dhehibi</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <div class="contact-label">Location</div>
+                            <div class="contact-value">Paris, France</div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-details">
+                            <div class="contact-label">Available for</div>
+                            <div class="contact-value">6-month international internship starting February 2026</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer noir pour cacher le watermark -->
+    <div class="footer-overlay"></div>
+    
+    <!-- Bouton audio professionnel -->
+    <div class="audio-control" onclick="toggleAudio()" id="audioControl">
+        <div class="play-icon" id="playIcon"></div>
+    </div>
+    
+    <!-- Audio invisible avec loop et autoplay -->
+    <audio id="ambientAudio" loop preload="auto" autoplay>
+        <source src="jheneaiko.mp3" type="audio/mpeg">
+    </audio>
+
+    <script type="text/javascript">
+        !function(){
+            if(!window.UnicornStudio){
+                window.UnicornStudio={isInitialized:!1};
+                var i=document.createElement("script");
+                i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",
+                i.onload=function(){
+                    window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0);
+                    
+                    // Protection header/footer
+                    setTimeout(() => {
+                        const footer = document.querySelector('.footer-overlay');
+                        const header = document.querySelector('.header-menu');
+                        
+                        [footer, header].forEach(element => {
+                            if (element) {
+                                element.style.zIndex = '2147483647';
+                                element.style.pointerEvents = 'auto';
+                                
+                                element.addEventListener('click', function(e) {
+                                    if (e.target === element) {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        return false;
+                                    }
+                                }, true);
+                            }
+                        });
+                    }, 1000);
+                },
+                (document.head || document.body).appendChild(i)
+            }
+        }();
+        
+        // Contrôle audio professionnel avec autoplay
+        let isPlaying = false;
+        
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('ambientAudio');
+            const playIcon = document.getElementById('playIcon');
+            
+            audio.volume = 0.6; // Volume augmenté à 60%
+            
+            // Tentative d'autoplay
+            audio.play().then(() => {
+                // Autoplay réussi
+                playIcon.className = 'pause-icon';
+                playIcon.innerHTML = '<div class="pause-bar"></div><div class="pause-bar"></div>';
+                isPlaying = true;
+            }).catch(() => {
+                // Autoplay bloqué, garder le bouton play
+                console.log('Autoplay bloqué - cliquez sur le bouton pour jouer');
+                isPlaying = false;
+            });
+        });
+        
+        function toggleAudio() {
+            const audio = document.getElementById('ambientAudio');
+            const playIcon = document.getElementById('playIcon');
+            
+            if (isPlaying) {
+                audio.pause();
+                // Retour à l'icône play
+                playIcon.className = 'play-icon';
+                playIcon.innerHTML = '';
+                isPlaying = false;
+            } else {
+                audio.volume = 0.6; // Volume à 60%
+                audio.play().then(() => {
+                    // Passer à l'icône pause
+                    playIcon.className = 'pause-icon';
+                    playIcon.innerHTML = '<div class="pause-bar"></div><div class="pause-bar"></div>';
+                    isPlaying = true;
+                }).catch(e => {
+                    console.log('Lecture bloquée par le navigateur');
+                });
+            }
+        }
+        
+        // Gestion du formulaire de contact avec Formspree
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            // Animation du bouton
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            // Laisser Formspree gérer l'envoi
+            // Le formulaire se soumettra normalement à Formspree
+            
+            // Réinitialiser le bouton après un délai (en cas d'erreur)
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
